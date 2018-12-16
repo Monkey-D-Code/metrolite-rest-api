@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
-
+from purchasereport import views
 urlpatterns = [
-
+    path('', views.index),
     path('sales/' , include('stats.urls')),
     path('admin/', admin.site.urls),
 ]
