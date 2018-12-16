@@ -16,10 +16,16 @@ from .serializers import Item_saleSerializer,Item_purchaseSerializer
 from datetime import datetime
 import json
 
+# FOR AUTHENTICATION AND PERMISSION
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
 class ItemSaleList(APIView):
-
+    # authentication_classes = (TokenAuthentication)
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
+        
 
         all_item_sales = Item_sale.objects.all()
         serializer = Item_saleSerializer(all_item_sales , many=True)
@@ -27,7 +33,7 @@ class ItemSaleList(APIView):
 
 
 class ItemPurchaseList(APIView):
-    
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
 
         all_item_purchases = Item_purchase.objects.all()
@@ -37,7 +43,7 @@ class ItemPurchaseList(APIView):
     
 
 class ItemsDatewise(APIView):
-
+    permission_classes = (IsAuthenticated,)
     def get(self,request , year, month , day):
 
         date = str(year)+"-"+str(month)+"-"+str(day)
@@ -46,7 +52,7 @@ class ItemsDatewise(APIView):
         return HttpResponse(JSONRenderer().render(serializer.data))
 
 class AddSale(APIView):
-
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
         return HttpResponse("Not ! Allowed")
 
@@ -63,7 +69,7 @@ class AddSale(APIView):
 
 
 class AddPurchase(APIView):
-    
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
         return HttpResponse("Not ! Allowed")
 
