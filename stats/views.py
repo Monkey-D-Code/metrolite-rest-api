@@ -59,9 +59,9 @@ class AddSale(APIView):
     def post(self,request):
         info = request.data
         
-        if info.keys() == {'item_name','item_id','item_price','quantity_bought'}:
+        if info.keys() == {'item_name','item_id','item_price','quantity_bought' , 'hospital'}:
 
-            I = Item_sale(item_id=info['item_id'] , item_name=info['item_name'] , item_price=info['item_price'], quantity_bought=info['quantity_bought'])
+            I = Item_sale(item_id=info['item_id'] , item_name=info['item_name'] , item_price=info['item_price'], quantity_bought=info['quantity_bought'] , hospital=info['hospital'])
             I.save()
             return Response(info , status=status.HTTP_201_CREATED)
         else:
@@ -76,9 +76,9 @@ class AddPurchase(APIView):
     def post(self,request):
         info = request.data
         
-        if info.keys() == {'name','item_id','price','purchase_quantity' ,'kitchen_issue' ,'stock'}:
+        if info.keys() == {'name','item_id','price','purchase_quantity' ,'kitchen_issue' ,'stock' ,'hospital'}:
 
-            I = Item_purchase(item_id=info['item_id'] , name=info['name'] , price=info['price'], purchase_quantity=info['purchase_quantity'], kitchen_issue=info['kitchen_issue'], stock=info['stock'])
+            I = Item_purchase(item_id=info['item_id'] , name=info['name'] , price=info['price'], purchase_quantity=info['purchase_quantity'], hospital=info['hospital'], kitchen_issue=info['kitchen_issue'], stock=info['stock'])
             I.save()
             return Response(info , status=status.HTTP_201_CREATED)
         else:
