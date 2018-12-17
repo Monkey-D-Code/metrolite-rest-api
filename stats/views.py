@@ -70,19 +70,33 @@ class AddSale(APIView):
 
 class AddPurchase(APIView):
     permission_classes = (IsAuthenticated,)
-    def get(self,request):
-        return HttpResponse("Not ! Allowed")
+        
 
     def post(self,request):
         info = request.data
         
         if info.keys() == {'name','item_id','price','purchase_quantity' ,'kitchen_issue' ,'stock' ,'hospital' , 'credit'}:
 
-            I = Item_purchase(item_id=info['item_id'] , name=info['name'] , price=info['price'], purchase_quantity=info['purchase_quantity'], hospital=info['hospital'], kitchen_issue=info['kitchen_issue'], stock=info['stock'] , credit=info['credit'])
-            I.save()
-            return Response(info , status=status.HTTP_201_CREATED)
+            DT = datetime.now()
+            date = str(DT.year)+"-"+str(DT.month)+"-"+str(DT.day)
+            purchase = Item_purchase.objects.filter(date=date,item_id=info['item_id'])
+            found =  True if purchase.count() >0 else False
+            if found :
+                purchase_snapshots = Item_purchase.objects.get(date=date,item_id=info['item_id'])
+                purchase_snapshots.purchase_quantity=info['purchase_quantity']
+                purchase_snapshots.stock=info['stock']
+                purchase_snapshots.kitchen_issue=info['kitchen_issue']
+                purchase_snapshots.save()
+                return Response(info , status=status.HTTP_202_ACCEPTED)
+            else:
+                I = Item_purchase(item_id=info['item_id'] , name=info['name'] , price=info['price'], purchase_quantity=info['purchase_quantity'], hospital=info['hospital'], kitchen_issue=info['kitchen_issue'], stock=info['stock'] , credit=info['credit'])
+                I.save()
+                return Response(info , status=status.HTTP_201_CREATED)
         else:
             return Response({"details" : "Please Verify the input format"} , status=status.HTTP_400_BAD_REQUEST)
+
+
+    
 
 class SaleInDay(APIView):
     permission_classes = (IsAuthenticated,)
