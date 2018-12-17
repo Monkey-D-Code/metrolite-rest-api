@@ -65,7 +65,7 @@ class AddSale(APIView):
             I.save()
             return Response(info , status=status.HTTP_201_CREATED)
         else:
-            return Response("Please Verify the input format" , status=status.HTTP_400_BAD_REQUEST)
+            return Response({"details" : "Please Verify the input format"} , status=status.HTTP_400_BAD_REQUEST)
 
 
 class AddPurchase(APIView):
