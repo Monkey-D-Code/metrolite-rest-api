@@ -120,3 +120,22 @@ class SaleInDay(APIView):
         else:
             return Response({"details" : "Hospital Name Only !"} , status=status.HTTP_400_BAD_REQUEST)
         
+
+class ItemPurchaseDetail(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self,request):
+        return Response({"details" :"Not ! Allowed"} , status=status.HTTP_404_NOT_FOUND)
+    
+    def post(self,request):
+        info = request.data
+        DT = datetime.now()
+        date = str(DT.year)+"-"+str(DT.month)+"-"+str(DT.day)
+        if info.keys() == {'hospital' , 'item_id'}:
+           
+            ichigo = Item_purchase.objects.filter(date=date,hospital=info['hospital'],item_id=info['item_id'])
+            serializer = Item_purchaseSerializer(ichigo , many=True)
+        
+            return HttpResponse(JSONRenderer().render(serializer.data))
+
+        else:
+            return Response({"details" : "Hospital Name Only !"} , status=status.HTTP_400_BAD_REQUEST)
