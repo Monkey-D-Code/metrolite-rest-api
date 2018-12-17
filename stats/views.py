@@ -82,4 +82,27 @@ class AddPurchase(APIView):
             I.save()
             return Response(info , status=status.HTTP_201_CREATED)
         else:
-            return Response("Please Verify the input format" , status=status.HTTP_400_BAD_REQUEST)
+            return Response({"details" : "Please Verify the input format"} , status=status.HTTP_400_BAD_REQUEST)
+
+class SaleInDay(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self,request):
+        return Response({"details" :"Not ! Allowed"} , status=status.HTTP_404_NOT_FOUND)
+    
+    def post(self,request):
+        info = request.data
+        DT = datetime.now()
+        date = str(DT.year)+"-"+str(DT.month)+"-"+str(DT.day)
+        if info.keys() == {'hospital'}:
+            sales = Item_sale.objects.filter(hospital=info['hospital'],date=date)
+            # print(sales)
+            total_sale = 0;
+            for sale in sales:
+                total_sale += (sale.quantity_bought*sale.item_price)
+            # print(total_sale)
+            
+            return Response({'total_sale' : total_sale} , status=status.HTTP_200_OK)
+
+        else:
+            return Response({"details" : "Hospital Name Only !"} , status=status.HTTP_400_BAD_REQUEST)
+        

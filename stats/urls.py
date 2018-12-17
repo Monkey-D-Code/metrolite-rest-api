@@ -9,4 +9,5 @@ urlpatterns = [
     path('add-sale/' , views.AddSale.as_view()),
     path('view-purchases/',views.ItemPurchaseList.as_view()),
     path('add-purchase/' ,views.AddPurchase.as_view()),
+    path('sale-in-day/' , views.SaleInDay.as_view()),
 ]
