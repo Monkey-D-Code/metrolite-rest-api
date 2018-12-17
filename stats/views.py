@@ -76,9 +76,9 @@ class AddPurchase(APIView):
     def post(self,request):
         info = request.data
         
-        if info.keys() == {'name','item_id','price','purchase_quantity' ,'kitchen_issue' ,'stock' ,'hospital'}:
+        if info.keys() == {'name','item_id','price','purchase_quantity' ,'kitchen_issue' ,'stock' ,'hospital' , 'credit'}:
 
-            I = Item_purchase(item_id=info['item_id'] , name=info['name'] , price=info['price'], purchase_quantity=info['purchase_quantity'], hospital=info['hospital'], kitchen_issue=info['kitchen_issue'], stock=info['stock'])
+            I = Item_purchase(item_id=info['item_id'] , name=info['name'] , price=info['price'], purchase_quantity=info['purchase_quantity'], hospital=info['hospital'], kitchen_issue=info['kitchen_issue'], stock=info['stock'] , credit=info['credit'])
             I.save()
             return Response(info , status=status.HTTP_201_CREATED)
         else:
