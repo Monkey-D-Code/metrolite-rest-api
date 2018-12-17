@@ -20,7 +20,7 @@ class Item_purchase(models.Model):
     item_id = models.IntegerField()
     name = models.CharField(max_length=255)
     price = models.IntegerField()
-    
+    credit = models.BooleanField(default=False)
     purchase_quantity = models.DecimalField(max_digits=5 , decimal_places=3)
     kitchen_issue = models.DecimalField(max_digits=5 , decimal_places=3)
     stock = models.DecimalField(max_digits=5, decimal_places=3)
