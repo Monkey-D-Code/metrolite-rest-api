@@ -139,3 +139,19 @@ class ItemPurchaseDetail(APIView):
 
         else:
             return Response({"details" : "Hospital Name Only !"} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class PurchaseInHospital(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self , request):
+        return Response({"details" :"Not ! Allowed"} , status=status.HTTP_404_NOT_FOUND)
+
+    def post(self , request):
+        info = request.data
+        if info.keys() == {"hospital"}:
+            
+            byakuya = Item_purchase.objects.filter(hospital=info['hospital'])
+            serializer = Item_purchaseSerializer(byakuya , many=True)
+            return Response(serializer.data , status=status.HTTP_200_OK)
+        else:
+            return Response({"details" : "Hospital Name Only !"} , status=status.HTTP_400_BAD_REQUEST)

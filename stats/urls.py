@@ -11,4 +11,5 @@ urlpatterns = [
     path('add-purchase/' ,views.AddPurchase.as_view()),
     path('sale-in-day/' , views.SaleInDay.as_view()),
     path('purchase-detail/', views.ItemPurchaseDetail.as_view()),
+    path('purchase-in-hospital/' , views.PurchaseInHospital.as_view()),
 ]
