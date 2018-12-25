@@ -12,4 +12,6 @@ urlpatterns = [
     path('sale-in-day/' , views.SaleInDay.as_view()),
     path('purchase-detail/', views.ItemPurchaseDetail.as_view()),
     path('purchase-in-hospital/' , views.PurchaseInHospital.as_view()),
+    path('sale-one-day/' , views.SaleOneDay.as_view()),
+    path('purchase-one-day/' , views.PurchaseOneDay.as_view()),
 ]
